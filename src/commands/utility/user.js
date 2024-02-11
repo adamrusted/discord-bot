@@ -6,7 +6,7 @@ module.exports = {
     .setNameLocalizations({
       "es-ES": "recibir",
       fr: "accueillir",
-      it: "Benvenuto",
+      it: "benvenuto",
       ja: "いらっしゃいませ",
       ko: "환영하다",
       "pt-BR": "saudar",
