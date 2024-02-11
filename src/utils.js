@@ -46,7 +46,7 @@ const getNumbers = async () => {
   return myNumbers;
 };
 
-const setBotStatus = async (client) => {
+const setChannelInfo = async (client) => {
   const { date, prs, issues } = await getNumbers();
   if (!!process.env.UPDATED_AT_CHANNEL) {
     client.channels.cache
@@ -63,16 +63,6 @@ const setBotStatus = async (client) => {
       .get(process.env.ISSUES_CHANNEL)
       .setName(`${issues} Open Issues`);
   }
-  client.user.setPresence({
-    status: "dnd",
-    activities: [
-      {
-        name: `${process.env.REPOSITORY_OWNER}/${process.env.REPOSITORY_NAME}`,
-        state: `${issues} open issues and ${prs} open PRs as of ${date}`,
-        type: ActivityType.Watching,
-      },
-    ],
-  });
 };
 
 const getLatestRelease = async (client) => {
@@ -119,6 +109,6 @@ const getLatestRelease = async (client) => {
 };
 
 module.exports = {
-  setBotStatus,
+  setChannelInfo,
   getLatestRelease,
 };
