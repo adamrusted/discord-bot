@@ -33,6 +33,7 @@ If you're testing this locally, you can use the command `npm run dev` to run nod
 - [ ] Add Discussions Channel
 - [ ] Add Latest Release Channel
 
+[CRON]: https://crontab.guru/
 [timezones]: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 [create-discord-bot]: https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot
 [find-discord-id]: https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID
