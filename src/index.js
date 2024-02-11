@@ -18,7 +18,6 @@ client.once(Events.ClientReady, (readyClient) => {
       readyClient.user.displayName
     }`
   );
-  setBotStatus(readyClient);
 });
 
 if (!!process.env.UPDATES_CRON) {
@@ -50,7 +49,7 @@ if (
     releasesChannel
       .send({
         content: `<@&${process.env.RELEASE_NOTIFICATION_ROLE}> ${release.url}`,
-        flags: [MessageFlags.SuppressEmbeds],
+        // flags: [MessageFlags.SuppressEmbeds],
       })
       .then((message) => {
         message.crosspost();
