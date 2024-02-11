@@ -13,8 +13,11 @@ module.exports = {
     ),
   async execute(interaction) {
     const target = interaction.options.getUser("user");
-    await interaction.reply(
-      `Welcome, <@${target.id}> 👋\n\nSee <#${process.env.VERIFY_CHANNEL}> for instructions on how to gain access to all channels here.`
-    );
+    if (!!process.env.VERIFY_CHANNEL) {
+      await interaction.reply(
+        `Welcome, <@${target.id}> 👋\n\nSee <#${process.env.VERIFY_CHANNEL}> for instructions on how to gain access to all channels here.`
+      );
+    }
+    await interaction.reply(`Welcome, <@${target.id}> 👋`);
   },
 };

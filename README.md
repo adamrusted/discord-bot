@@ -15,6 +15,7 @@ This bot is built primarily for the [Simple Icons] Discord server. We wanted a w
 |      `UPDATED_AT_CHANNEL`      | The [ID][find-discord-id] of the Discord channel you'd like to post the 'last updated' time to.                                 |     No     |
 |         `PRS_CHANNEL`          | The [ID][find-discord-id] of the Discord channel you'd like to post the number of open PRs to.                                  |     No     |
 |        `ISSUES_CHANNEL`        | The [ID][find-discord-id] of the Discord channel you'd like to post the number of open issues to.                               |     No     |
+|        `VERIFY_CHANNEL`        | The [ID][find-discord-id] of the Discord channel you'd like to point new members to.                                            |     No     |
 |         `UPDATES_CRON`         | A [CRON] code for how often the bot should update its' bio and the channels (if set)                                            |     No     |
 | `RELEASE_NOTIFICATION_CHANNEL` | The [ID][find-discord-id] of the Discord channel you'd like to send release notifications to.                                   |     No     |
 |  `RELEASE_NOTIFICATION_ROLE`   | The [ID][find-discord-id] of the Discord role you'd like to notify of a release.                                                |     No     |
