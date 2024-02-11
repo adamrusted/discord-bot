@@ -1,6 +1,8 @@
-// @ts-nocheck
+require("dotenv").config();
 const { ActivityType } = require("discord.js");
 const { DateTime } = require("luxon");
+
+const TIMEZONE = process.env.TZ_IDENTIFIER || "Europe/London";
 
 const getNumbers = async () => {
   const myNumbers = await fetch("https://api.github.com/graphql", {
@@ -32,7 +34,9 @@ const getNumbers = async () => {
         throw new Error(val.error.message);
       }
       return {
-        date: DateTime.now().toFormat("dd LLL yy H:mm ZZZZ"),
+        date: DateTime.local({ zone: TIMEZONE }).toFormat(
+          "dd LLL yy H:mm ZZZZ"
+        ),
         issues: Number(val.data.repository.issues.totalCount).toLocaleString(),
         prs: Number(
           val.data.repository.pullRequests.totalCount
@@ -97,7 +101,6 @@ const getLatestRelease = async (client) => {
   })
     .then((res) => res.json())
     .then((val) => {
-      // @ts-ignore
       const { errors, data } = val;
       if (errors) {
         throw new Error(errors[0].message);
