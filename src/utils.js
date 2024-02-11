@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { ActivityType } from "discord.js";
-import { DateTime } from "luxon";
+const { ActivityType } = require("discord.js");
+const { DateTime } = require("luxon");
 
 const getNumbers = async () => {
   const myNumbers = await fetch("https://api.github.com/graphql", {
@@ -42,7 +42,7 @@ const getNumbers = async () => {
   return myNumbers;
 };
 
-export const setBotStatus = async (client) => {
+const setBotStatus = async (client) => {
   const { date, prs, issues } = await getNumbers();
   if (!!process.env.UPDATED_AT_CHANNEL) {
     client.channels.cache
@@ -71,7 +71,7 @@ export const setBotStatus = async (client) => {
   });
 };
 
-export const getLatestRelease = async (client) => {
+const getLatestRelease = async (client) => {
   const releaseDetails = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
@@ -113,4 +113,9 @@ export const getLatestRelease = async (client) => {
       }
     });
   return releaseDetails;
+};
+
+module.exports = {
+  setBotStatus,
+  getLatestRelease,
 };

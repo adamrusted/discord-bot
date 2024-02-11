@@ -2,7 +2,7 @@
   "name": "discord-bot",
   "version": "1.0.0",
   "main": "src/index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "nodemon",
     "prod": "node"
