@@ -4,8 +4,8 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "run:dev": "nodemon",
-    "run:prod": "node"
+    "dev": "nodemon",
+    "prod": "node"
   },
   "author": {
     "name": "Adam Rusted",

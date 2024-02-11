@@ -21,9 +21,8 @@ This bot is built primarily for the [Simple Icons] Discord server. We wanted a w
 |         `RELEASE_CRON`         | A [CRON] code for when the bot should check for releases.                                                                       |     No     |
 |        `TZ_IDENTIFIER`         | The [timezone identifier][timezones] for your preferred region. Defaults to `Europe/London`.                                    |     No     |
 
-1. Install dependencies with `npm install`.
-2. Build the bot with `npm run build`.
-3. Run the bot with `node dist/index`.
+2. Install dependencies with `npm install`.
+3. Run the bot with `npm run prod`.
 
 ## Development
 
