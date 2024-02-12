@@ -15,7 +15,7 @@ module.exports = {
       "zh-TW": "歡迎",
     })
     .setDescription("Welcome a user to the server!")
-    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+    .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers) // Changed from 'Administrator' to 'BanMembers' to allow moderator roles to welcome.
     .addUserOption((option) =>
       option
         .setName("user")
