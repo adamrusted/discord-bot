@@ -39,7 +39,8 @@ module.exports = {
       await interaction.reply(
         `Welcome, <@${target.id}> 👋\n\nSee <#${process.env.VERIFY_CHANNEL}> for instructions on how to gain access to all channels here.`
       );
+    } else {
+      await interaction.reply(`Welcome, <@${target.id}> 👋`);
     }
-    await interaction.reply(`Welcome, <@${target.id}> 👋`);
   },
 };
