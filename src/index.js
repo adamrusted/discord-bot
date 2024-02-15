@@ -34,7 +34,7 @@ for (const folder of commandFolders) {
       client.commands.set(command.data.name, command);
     } else {
       console.log(
-        `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
+        `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
       );
     }
   }
@@ -85,7 +85,7 @@ if (
     console.log("Posting about Latest Release");
     const release = await getLatestRelease(client);
     const releasesChannel = client.channels.cache.get(
-      process.env.RELEASE_NOTIFICATION_CHANNEL
+      process.env.RELEASE_NOTIFICATION_CHANNEL,
     );
     releasesChannel
       .send({

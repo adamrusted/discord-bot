@@ -9,7 +9,7 @@ module.exports = {
       opt
         .setRequired(true)
         .setName("query")
-        .setDescription("Enter the query you would like people to respond to.")
+        .setDescription("Enter the query you would like people to respond to."),
     ),
   async execute(interaction) {
     const target = interaction.options.getString("poll");

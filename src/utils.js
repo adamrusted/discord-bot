@@ -35,11 +35,11 @@ const getNumbers = async () => {
       }
       return {
         date: DateTime.local({ zone: TIMEZONE }).toFormat(
-          "dd LLL yy H:mm ZZZZ"
+          "dd LLL yy H:mm ZZZZ",
         ),
         issues: Number(val.data.repository.issues.totalCount).toLocaleString(),
         prs: Number(
-          val.data.repository.pullRequests.totalCount
+          val.data.repository.pullRequests.totalCount,
         ).toLocaleString(),
       };
     });
@@ -96,7 +96,7 @@ const getLatestRelease = async (client) => {
         throw new Error(errors[0].message);
       }
       const releaseDate = DateTime.fromISO(
-        data.repository.latestRelease.publishedAt
+        data.repository.latestRelease.publishedAt,
       );
       const today = DateTime.now().startOf("day");
       if (releaseDate > today) {
