@@ -9,11 +9,11 @@ module.exports = {
             .setDescription('The user you would like to add to the maintainer team')
             .setRequired(true)
         )
-        .addRoleOption((opt) => {
+        .addRoleOption((opt) => 
             opt.setName('role')
-            .setDescription('The role you are giving the user')
-            .setRequired(true)
-        }),
+                .setDescription('The role you are giving the user')
+                .setRequired(true)
+        ),
     async execute(interaction) {
         await interaction.reply({ content: 'This is a beta command', ephemeral: true})
         // const newMaintainer = await interaction.options.getUser('person')
