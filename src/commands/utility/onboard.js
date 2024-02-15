@@ -12,7 +12,6 @@ module.exports = {
     async execute(interaction) {
         await interaction.reply({ content: 'This is a beta command', ephemeral: true})
         const newMaintainer = await interaction.options.getUser('person')
-        await newMaintainer.roles.add('1142045487474675724')
         await newMaintainer.send('Hey there! Welcome to the **Simple Icons Maintainer** Team!')
     }
 }
