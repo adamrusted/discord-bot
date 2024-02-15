@@ -17,7 +17,7 @@ client.once(Events.ClientReady, (readyClient) => {
 });
 
 // Run Commands
-client.on(Events.InteractionCreate, async (interaction) => runCommand(interaction));
+client.on(Events.InteractionCreate, runCommand(interaction));
 
 // Channel Title Updates
 if (!!process.env.UPDATES_CRON) {
