@@ -9,6 +9,7 @@ module.exports = {
         opt
             .setRequired(true)
             .setName('poll')
+            .setDescription('Enter the body of the poll you would like to open')
     }),
   async execute(interaction) {
     const target = interaction.options.getString("poll");
