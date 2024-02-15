@@ -8,14 +8,12 @@ module.exports = {
     .addStringOption((opt) => 
         opt
             .setRequired(true)
-            .setName('poll')
-            .setDescription('Enter the body of the poll you would like to open')),
+            .setName('query')
+            .setDescription('Enter the query you would like people to respond to.')),
   async execute(interaction) {
     const target = interaction.options.getString("poll");
-    await interaction.reply(`# New Poll\n${target}`).then((reply) => {
-        reply.react('👍').then((reply) => {
-            reply.react('👎')
-        })
-    })
+    const message = await interaction.reply({ content: `## New Poll from <@${interaction.user.id}>\n${target}`, fetchReply: true})
+    message.react('👍')
+        .then(() => message.react('👎'))
   },
 };
