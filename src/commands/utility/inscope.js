@@ -15,6 +15,7 @@ module.exports = {
         .setDescription("The full URL of the GitHub repository")
     ),
   async execute(interaction) {
+    console.log(interaction.locale);
     const sourceGitHub = await interaction.options.getString("url");
     const { stars, releaseDate, recent, error, repo } = await getGitHub(
       sourceGitHub
@@ -25,7 +26,7 @@ module.exports = {
       interaction.reply(
         `:tada: **${gitURL}** is in scope from GitHub with **${stars.toLocaleString()}** stars and a release on **${DateTime.fromISO(
           releaseDate,
-          { zone: TIMEZONE }
+          { setZone: TIMEZONE }
         ).toLocaleString()}**.`,
         { flags: [MessageFlags.SuppressEmbeds] }
       );
@@ -33,7 +34,7 @@ module.exports = {
       interaction.reply(
         `:cry: **${gitURL}** is not in scope with **${stars.toLocaleString()}** stars and **${DateTime.fromISO(
           releaseDate,
-          { zone: TIMEZONE }
+          { setZone: TIMEZONE }
         ).toLocaleString()}** being their most recent release...`,
         { flags: [MessageFlags.SuppressEmbeds] }
       );
