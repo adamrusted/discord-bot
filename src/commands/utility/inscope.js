@@ -1,6 +1,6 @@
 const { DateTime } = require("luxon");
 const { getGitHub } = require("../../utils/github");
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, MessageFlags } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -18,21 +18,20 @@ module.exports = {
       sourceGitHub
     );
     if (error) throw new Error(error);
+    const gitURL = `[${repo.owner}/${repo.name}](${sourceGitHub})`;
     if (stars > 5000 && recent) {
       interaction.reply(
-        `:tada: **${repo.owner}/${
-          repo.name
-        }** is in scope from GitHub with **${stars.toLocaleString()}** stars and a release on **${DateTime.fromISO(
+        `:tada: **${gitURL}** is in scope from GitHub with **${stars.toLocaleString()}** stars and a release on **${DateTime.fromISO(
           releaseDate
-        ).toLocaleString()}**.`
+        ).toLocaleString()}**.`,
+        { flags: [MessageFlags.SuppressEmbeds] }
       );
     } else {
       interaction.reply(
-        `**${repo.owner}/${
-          repo.name
-        }:cry: ** is not in scope with **${stars.toLocaleString()}** stars and **${DateTime.fromISO(
+        `:cry: **${gitURL}** is not in scope with **${stars.toLocaleString()}** stars and **${DateTime.fromISO(
           releaseDate
-        ).toLocaleString()}** being their most recent release...`
+        ).toLocaleString()}** being their most recent release...`,
+        { flags: [MessageFlags.SuppressEmbeds] }
       );
     }
   },
