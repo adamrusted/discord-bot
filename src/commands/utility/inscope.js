@@ -25,17 +25,19 @@ module.exports = {
     if (stars > 5000 && recent) {
       interaction.reply(
         `:tada: **${gitURL}** is in scope from GitHub with **${stars.toLocaleString()}** stars and a release on **${DateTime.fromISO(
-          releaseDate,
-          { zone: TIMEZONE }
-        ).toLocaleString()}**.`,
+          releaseDate
+        ).toLocaleString(DateTime.DATETIME_SHORT, {
+          locale: interaction.locale,
+        })}**.`,
         { flags: [MessageFlags.SuppressEmbeds] }
       );
     } else {
       interaction.reply(
         `:cry: **${gitURL}** is not in scope with **${stars.toLocaleString()}** stars and **${DateTime.fromISO(
-          releaseDate,
-          { zone: TIMEZONE }
-        ).toLocaleString()}** being their most recent release...`,
+          releaseDate
+        ).toLocaleString(DateTime.DATETIME_SHORT, {
+          locale: interaction.locale,
+        })}** being their most recent release...`,
         { flags: [MessageFlags.SuppressEmbeds] }
       );
     }
