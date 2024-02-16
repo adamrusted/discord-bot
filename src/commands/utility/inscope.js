@@ -20,7 +20,7 @@ module.exports = {
     if (error) throw new Error(error);
     if (stars > 5000 && recent) {
       interaction.reply(
-        `<:tada:> **${repo.owner}/${
+        `:tada: **${repo.owner}/${
           repo.name
         }** is in scope from GitHub with **${stars.toLocaleString()}** stars and a release on **${DateTime.fromISO(
           releaseDate
@@ -30,7 +30,7 @@ module.exports = {
       interaction.reply(
         `**${repo.owner}/${
           repo.name
-        }<:cry:> ** is not in scope with **${stars.toLocaleString()}** stars and **${DateTime.fromISO(
+        }:cry: ** is not in scope with **${stars.toLocaleString()}** stars and **${DateTime.fromISO(
           releaseDate
         ).toLocaleString()}** being their most recent release...`
       );
