@@ -1,5 +1,7 @@
 const { DateTime } = require("luxon");
 const { getGitHub } = require("../../utils/github");
+const { SlashCommandBuilder } = require("discord.js");
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("scope")
