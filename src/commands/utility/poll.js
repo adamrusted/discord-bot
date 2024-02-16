@@ -13,7 +13,8 @@ module.exports = {
   async execute(interaction) {
     const target = interaction.options.getString("poll");
     const message = await interaction.reply({ content: `## New Poll from <@${interaction.user.id}>\n${target}`, fetchReply: true})
-    message.react('👍')
-        .then(() => message.react('👎'))
+    message.react('<:y_:1208032045301760080>')
+        .then(() => message.react('<:__:1208032126071611492>'))
+        .then(() => message.react('<:n_:1208032094983561238>'))
   },
 };
