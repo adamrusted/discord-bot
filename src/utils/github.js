@@ -32,7 +32,6 @@ const getGitHub = async (ghURL) => {
         },
       }),
     }).then((val) => val.json());
-    console.log(releaseDate, stars);
     return {
       stars,
       releaseDate,
@@ -41,7 +40,9 @@ const getGitHub = async (ghURL) => {
     };
   } catch (err) {
     console.log(err);
-    return null;
+    return {
+      error: err.message,
+    };
   }
 };
 
