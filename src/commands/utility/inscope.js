@@ -2,6 +2,8 @@ const { DateTime } = require("luxon");
 const { getGitHub } = require("../../utils/github");
 const { SlashCommandBuilder, MessageFlags } = require("discord.js");
 
+const TIMEZONE = process.env.TZ_IDENTIFIER || "Europe/London";
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("ghscope")
@@ -22,14 +24,16 @@ module.exports = {
     if (stars > 5000 && recent) {
       interaction.reply(
         `:tada: **${gitURL}** is in scope from GitHub with **${stars.toLocaleString()}** stars and a release on **${DateTime.fromISO(
-          releaseDate
+          releaseDate,
+          { zone: TIMEZONE }
         ).toLocaleString()}**.`,
         { flags: [MessageFlags.SuppressEmbeds] }
       );
     } else {
       interaction.reply(
         `:cry: **${gitURL}** is not in scope with **${stars.toLocaleString()}** stars and **${DateTime.fromISO(
-          releaseDate
+          releaseDate,
+          { zone: TIMEZONE }
         ).toLocaleString()}** being their most recent release...`,
         { flags: [MessageFlags.SuppressEmbeds] }
       );
