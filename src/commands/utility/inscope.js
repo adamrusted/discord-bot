@@ -19,16 +19,26 @@ module.exports = {
   async execute(interaction) {
     // const sourceUrl = await interaction.options.getString("url");
     const sourceGitHub = await interaction.options.getString("github");
-    const { stars, releaseDate, recent, error } = await getGitHub(sourceGitHub);
+    const { stars, releaseDate, recent, error, repo } = await getGitHub(
+      sourceGitHub
+    );
     if (error) throw new Error(error);
     if (stars > 5000 && recent) {
       interaction.reply(
-        `In scope from GitHub with ${stars.toLocaleString()} stars and a release on ${DateTime.fromISO(
+        `**${repo.owner}/${
+          repo.name
+        }** is in scope from GitHub with **${stars.toLocaleString()}** stars and a release on **${DateTime.fromISO(
           releaseDate
-        ).toLocaleString()}`
+        ).toLocaleString()}**.`
       );
     } else {
-      interaction.reply(`Not in scope based on GitHub stats...`);
+      interaction.reply(
+        `**${repo.owner}/${
+          repo.name
+        }** is not in scope with **${stars.toLocaleString()}** stars and **${DateTime.fromISO(
+          releaseDate
+        ).toLocaleString()}** being their most recent release...`
+      );
     }
   },
 };

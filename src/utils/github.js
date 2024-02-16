@@ -37,16 +37,22 @@ const getGitHub = async (ghURL) => {
       releaseDate,
       recent:
         DateTime.fromISO(releaseDate) > DateTime.now().minus({ months: 2 }),
+      repo: {
+        name: url[4],
+        owner: url[3],
+      },
     };
   } catch (err) {
     console.log(err);
     return {
       error: err.message,
+      repo: {
+        name: url[4],
+        owner: url[3],
+      },
     };
   }
 };
-
-getGitHub("https://github.com/simple-icons/simple-icons");
 
 module.exports = {
   getGitHub,
