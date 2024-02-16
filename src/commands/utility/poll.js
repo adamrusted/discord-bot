@@ -12,7 +12,7 @@ module.exports = {
         .setDescription("Enter the query you would like people to respond to."),
     ),
   async execute(interaction) {
-    const target = await interaction.options.getString("poll");
+    const target = await interaction.options.getString("query");
     const message = await interaction.reply({
       content: `## New Poll from <@${interaction.user.id}>\n${target}`,
       fetchReply: true,
