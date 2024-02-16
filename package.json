@@ -5,7 +5,9 @@
   "type": "commonjs",
   "scripts": {
     "dev": "nodemon",
-    "prod": "node"
+    "prod": "node",
+    "prepare": "husky",
+    "format": "prettier --write ."
   },
   "author": {
     "name": "Adam Rusted",
@@ -13,12 +15,13 @@
     "url": "https://github.com/adamrusted"
   },
   "dependencies": {
-    "discord.js": "14.14.1",
-    "luxon": "3.4.4",
-    "node-cron": "3.0.3"
+    "discord.js": "^14.14.1",
+    "luxon": "^3.4.4",
+    "node-cron": "^3.0.3"
   },
   "devDependencies": {
-    "dotenv": "16.4.2",
-    "nodemon": "3.0.3"
+    "dotenv": "^16.4.2",
+    "husky": "^9.0.11",
+    "nodemon": "^3.0.3"
   }
 }
