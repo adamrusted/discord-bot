@@ -87,7 +87,7 @@ if (
     const releasesChannel = client.channels.cache.get(
       process.env.RELEASE_NOTIFICATION_CHANNEL,
     );
-    releasesChannel
+    await releasesChannel
       .send({
         content: `<@&${process.env.RELEASE_NOTIFICATION_ROLE}> ${release.url}`,
       })

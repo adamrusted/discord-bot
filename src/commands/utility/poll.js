@@ -17,8 +17,9 @@ module.exports = {
       content: `## New Poll from <@${interaction.user.id}>\n${target}`,
       fetchReply: true,
     });
-    message.react('<:y_:1208032045301760080>')
-      .then(() => message.react('<:__:1208032126071611492>'))
-      .then(() => message.react('<:n_:1208032094983561238>'))
+    message
+      .react("<:y_:1208032045301760080>")
+      .then(() => message.react("<:__:1208032126071611492>"))
+      .then(() => message.react("<:n_:1208032094983561238>"));
   },
 };

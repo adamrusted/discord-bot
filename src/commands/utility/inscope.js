@@ -12,33 +12,32 @@ module.exports = {
       opt
         .setName("url")
         .setRequired(true)
-        .setDescription("The full URL of the GitHub repository")
+        .setDescription("The full URL of the GitHub repository"),
     ),
   async execute(interaction) {
     console.log(interaction);
     const sourceGitHub = await interaction.options.getString("url");
-    const { stars, releaseDate, recent, error, repo } = await getGitHub(
-      sourceGitHub
-    );
+    const { stars, releaseDate, recent, error, repo } =
+      await getGitHub(sourceGitHub);
     if (error) throw new Error(error);
     const gitURL = `[${repo.owner}/${repo.name}](${sourceGitHub})`;
     if (stars > 5000 && recent) {
       interaction.reply(
         `:tada: **${gitURL}** is in scope from GitHub with **${stars.toLocaleString()}** stars and a release on **${DateTime.fromISO(
-          releaseDate
+          releaseDate,
         ).toLocaleString(DateTime.DATETIME_SHORT, {
           locale: interaction.locale,
         })}**.`,
-        { flags: [MessageFlags.SuppressEmbeds] }
+        { flags: [MessageFlags.SuppressEmbeds] },
       );
     } else {
       interaction.reply(
         `:cry: **${gitURL}** is not in scope with **${stars.toLocaleString()}** stars and **${DateTime.fromISO(
-          releaseDate
+          releaseDate,
         ).toLocaleString(DateTime.DATETIME_SHORT, {
           locale: interaction.locale,
         })}** being their most recent release...`,
-        { flags: [MessageFlags.SuppressEmbeds] }
+        { flags: [MessageFlags.SuppressEmbeds] },
       );
     }
   },
