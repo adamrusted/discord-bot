@@ -2,8 +2,8 @@ require("dotenv").config();
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
-const { setChannelInfo, getLatestRelease } = require("./utils.js");
-const { getLatestStats } = require("./utils/github.js");
+const { setChannelInfo } = require("./utils");
+const { getLatestStats } = require("./utils/github");
 const cron = require("node-cron");
 
 const client = new Client({
@@ -81,42 +81,35 @@ client.on(Events.InteractionCreate, async (interaction) => {
 // Channel Title Updates
 if (!!process.env.UPDATES_CRON) {
   cron.schedule(process.env.UPDATES_CRON, async () => {
-    // First, check to see if there's been a release
-    if (
-      !!process.env.RELEASE_NOTIFICATION_ROLE &&
-      !!process.env.RELEASE_NOTIFICATION_CHANNEL
-    ) {
-      const {
-        data: { latestRelease },
-      } = await getLatestStats(
-        `https://github.com/${process.env.REPOSITORY_OWNER}/${process.env.REPOSITORY_NAME}`,
-      );
+    const {
+      data: { issues, prs, latestRelease },
+    } = await getLatestStats(
+      `https://github.com/${process.env.REPOSITORY_OWNER}/${process.env.REPOSITORY_NAME}`,
+    );
 
-      // If there has been a release, post about it!
-      if (latestRelease.tagName !== lastPostedVersion.tagName) {
-        console.log(
-          `New version found: v${latestRelease.tagName}. Previous version was v${lastPostedVersion.tagName}.`,
-        );
-        const releasesChannel = client.channels.cache.get(
-          process.env.RELEASE_NOTIFICATION_CHANNEL,
-        );
-        await releasesChannel
-          .send({
-            content: `<@&${process.env.RELEASE_NOTIFICATION_ROLE}> ${latestRelease.url}`,
-          })
-          .then((message) => {
-            message.crosspost();
-            lastPostedVersion = latestRelease;
-          })
-          .finally(() =>
-            console.log(`Release ${latestRelease.tagName} posted`),
-          );
-      } else {
-        console.log(`No version change to report.`);
-      }
-    }
     console.log("Setting Stats Channel Names.");
-    setChannelInfo(client);
+    setChannelInfo(client, { issues, prs });
+
+    // If there has been a release, post about it!
+    if (latestRelease.tagName !== lastPostedVersion.tagName) {
+      console.log(
+        `New version found: v${latestRelease.tagName}. Previous version was v${lastPostedVersion.tagName}.`,
+      );
+      const releasesChannel = client.channels.cache.get(
+        process.env.RELEASE_NOTIFICATION_CHANNEL,
+      );
+      await releasesChannel
+        .send({
+          content: `<@&${process.env.RELEASE_NOTIFICATION_ROLE}> ${latestRelease.url}`,
+        })
+        .then((message) => {
+          message.crosspost();
+          lastPostedVersion = latestRelease;
+        })
+        .finally(() => console.log(`Release ${latestRelease.tagName} posted`));
+    } else {
+      console.log(`No version change to report.`);
+    }
   });
 }
 
