@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "type": "commonjs",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon --ignore release.json",
     "prod": "node",
     "prepare": "husky",
     "format": "prettier --write ."

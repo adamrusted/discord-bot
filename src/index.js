@@ -3,16 +3,23 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
 const { setChannelInfo, getLatestRelease } = require("./utils.js");
+const { getLatestStats } = require("./utils/github.js");
 const cron = require("node-cron");
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
 });
 
+let lastPostedVersion;
+
 // Client Startup
-client.once(Events.ClientReady, (readyClient) => {
+client.once(Events.ClientReady, async (readyClient) => {
   readyClient.user.setStatus("dnd");
   console.log(`Logged in as ${readyClient.user.displayName}`);
+  const latestRelease = await getLatestStats(
+    `https://github.com/${process.env.REPOSITORY_OWNER}/${process.env.REPOSITORY_NAME}`,
+  );
+  lastPostedVersion = latestRelease.data.latestRelease;
 });
 
 // Load Commands
@@ -70,31 +77,39 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
 // Channel Title Updates
 if (!!process.env.UPDATES_CRON) {
-  cron.schedule(process.env.UPDATES_CRON, () => {
+  cron.schedule(process.env.UPDATES_CRON, async () => {
+    // First, check to see if there's been a release
+    if (
+      !!process.env.RELEASE_NOTIFICATION_ROLE &&
+      !!process.env.RELEASE_NOTIFICATION_CHANNEL
+    ) {
+      const latestRelease = await getLatestStats(
+        `https://github.com/${process.env.REPOSITORY_OWNER}/${process.env.REPOSITORY_NAME}`,
+      );
+
+      // If there has been a release, post about it!
+      if (latestRelease.tagName !== lastPostedVersion.tagName) {
+        console.log(
+          `New version found: ${latestRelease.tagName}. Previous version was ${lastPostedVersion.tagName}`,
+        );
+        const releasesChannel = client.channels.cache.get(
+          process.env.RELEASE_NOTIFICATION_CHANNEL,
+        );
+        await releasesChannel
+          .send({
+            content: `<@&${process.env.RELEASE_NOTIFICATION_ROLE}> ${latestRelease.url}`,
+          })
+          .then((message) => {
+            message.crosspost();
+            lastPostedVersion = latestRelease;
+          })
+          .finally(() =>
+            console.log(`Release ${latestRelease.tagName} posted`),
+          );
+      }
+    }
     console.log("Setting Stats Channel Names");
     setChannelInfo(client);
-  });
-}
-
-if (
-  !!process.env.RELEASE_NOTIFICATION_ROLE &&
-  !!process.env.RELEASE_NOTIFICATION_CHANNEL &&
-  !!process.env.RELEASE_CRON
-) {
-  cron.schedule(process.env.RELEASE_CRON, async () => {
-    console.log("Posting about Latest Release");
-    const release = await getLatestRelease(client);
-    const releasesChannel = client.channels.cache.get(
-      process.env.RELEASE_NOTIFICATION_CHANNEL,
-    );
-    await releasesChannel
-      .send({
-        content: `<@&${process.env.RELEASE_NOTIFICATION_ROLE}> ${release.url}`,
-      })
-      .then((message) => {
-        message.crosspost();
-      })
-      .finally(() => console.log(`Release ${release.tagName} Posted`));
   });
 }
 
