@@ -7,7 +7,9 @@ module.exports = {
     .setName("latest")
     .setDescription("Posts the latest release of the main project."),
   async execute(int) {
-    const { data, error } = await getLatestStats();
+    const { data, error } = await getLatestStats(
+      `https://github.com/${process.env.REPOSITORY_OWNER}/${process.env.REPOSITORY_NAME}`,
+    );
     if (error) throw new Error(error.message);
     console.log(data);
     const postedDate = DateTime.fromISO(
