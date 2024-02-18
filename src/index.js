@@ -15,11 +15,14 @@ let lastPostedVersion;
 // Client Startup
 client.once(Events.ClientReady, async (readyClient) => {
   readyClient.user.setStatus("dnd");
-  console.log(`Logged in as ${readyClient.user.displayName}`);
-  const latestRelease = await getLatestStats(
+  console.log(`Logged in as ${readyClient.user.displayName}.`);
+  const {
+    data: { latestRelease },
+  } = await getLatestStats(
     `https://github.com/${process.env.REPOSITORY_OWNER}/${process.env.REPOSITORY_NAME}`,
   );
-  lastPostedVersion = latestRelease.data.latestRelease;
+  lastPostedVersion = latestRelease;
+  console.log(`Cached v${latestRelease.tagName} as the latest release.`);
 });
 
 // Load Commands
@@ -83,14 +86,16 @@ if (!!process.env.UPDATES_CRON) {
       !!process.env.RELEASE_NOTIFICATION_ROLE &&
       !!process.env.RELEASE_NOTIFICATION_CHANNEL
     ) {
-      const latestRelease = await getLatestStats(
+      const {
+        data: { latestRelease },
+      } = await getLatestStats(
         `https://github.com/${process.env.REPOSITORY_OWNER}/${process.env.REPOSITORY_NAME}`,
       );
 
       // If there has been a release, post about it!
       if (latestRelease.tagName !== lastPostedVersion.tagName) {
         console.log(
-          `New version found: ${latestRelease.tagName}. Previous version was ${lastPostedVersion.tagName}`,
+          `New version found: v${latestRelease.tagName}. Previous version was v${lastPostedVersion.tagName}.`,
         );
         const releasesChannel = client.channels.cache.get(
           process.env.RELEASE_NOTIFICATION_CHANNEL,
@@ -106,9 +111,11 @@ if (!!process.env.UPDATES_CRON) {
           .finally(() =>
             console.log(`Release ${latestRelease.tagName} posted`),
           );
+      } else {
+        console.log(`No version change to report.`);
       }
     }
-    console.log("Setting Stats Channel Names");
+    console.log("Setting Stats Channel Names.");
     setChannelInfo(client);
   });
 }
