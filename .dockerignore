@@ -1,8 +1,7 @@
 node_modules
 .github
-.husky
 Dockerfile
 .nodemon-ignore
-.env.example
+.env*
 .prettierrc
 README.md

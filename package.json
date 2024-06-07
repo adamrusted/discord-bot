@@ -1,5 +1,5 @@
 {
-  "name": "discord-bot",
+  "name": "simple-icons-discord-bot",
   "version": "1.0.0",
   "main": "src/index.js",
   "type": "commonjs",
