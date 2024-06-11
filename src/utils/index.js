@@ -6,7 +6,9 @@ const TIMEZONE = process.env.TZ_IDENTIFIER || "Europe/London";
 const getNumbers = (stats) => {
   const { issues, prs } = stats;
   return {
-    date: DateTime.local({ zone: TIMEZONE }).toFormat("dd LLL yy H:mm ZZZZ"),
+    date: DateTime.local({ zone: TIMEZONE, locale: "en-GB" }).toFormat(
+      "dd LLL yy H:mm ZZZZ",
+    ),
     issues: Number(issues).toLocaleString(),
     prs: Number(prs).toLocaleString(),
   };
