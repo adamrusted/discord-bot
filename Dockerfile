@@ -1,4 +1,4 @@
-FROM node:21.7.3-alpine
+FROM node:22.16.0-alpine
 WORKDIR /usr/src/app
 RUN chown node:node ./
 USER node
